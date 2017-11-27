@@ -33,5 +33,23 @@ class TestLibrary < Minitest::Test
     assert_equal(expected, library.find_book_by_title("lord_of_the_rings"))
   end
 
+  def test_rental_details_by_title
+    library = Library.new()
+    expected = @books.last[:rental_details]
+    assert_equal(expected, library.rental_details_by_title("lord_of_the_rings"))
+  end
 
+  def test_add_book_title
+    library = Library.new()
+    library.add_book_title("silmarillion")
+    actual = library.list_all_books.length
+    assert_equal(3, actual)
+  end
+
+  def test_change_rental_details
+    library = Library.new()
+    library.change_rental_details("the hobbit", "Stuart", "22/04/16")
+    actual = library.rental_details_by_title("the hobbit")[:student_name]
+    assert_equal("Stuart", actual)
+  end
 end
